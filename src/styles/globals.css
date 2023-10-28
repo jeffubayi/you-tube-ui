@@ -6,6 +6,9 @@ body {
 
 body {
   color: "#000";
-  background: "#fff"
+  background: "#fff";
 }
 
+.MuiDrawer-paper {
+  border-width: 0;
+}
