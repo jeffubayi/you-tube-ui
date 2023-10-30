@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, alpha, useTheme } from '@mui/material/styles';
-import { Avatar, Box, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import { Avatar, Box, CardHeader, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -37,7 +37,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/KeyboardArrowRight';
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
 import Chip from '@mui/material/Chip';
-import FaceIcon from '@mui/icons-material/Face';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Grid from '@mui/material/Grid';
@@ -46,81 +45,136 @@ import { Theme, CSSObject } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/Home';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
 import ListSubheader from '@mui/material/ListSubheader';
 import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
-import PlayCircleFilledOutlinedIcon  from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
+import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
+import { useRouter } from 'next/router';
+
 
 const data = [
   {
-    src: 'https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ',
-    title: 'Don Diablo @ Tomorrowland Main Stage 2019 | Official…',
-    channel: 'Don Diablo',
-    views: '396k views',
-    createdAt: 'a week ago',
+    src: 'https://i.ytimg.com/vi/sBws8MSXN7A/maxresdefault.jpg',
+    title: 'React JS Crash Course',
+    channel: 'Traversy Media',
+    views: '3.2M views',
+    createdAt: '2 years ago',
+    id: "w7ejDZ8SWv8&t=5111s",
+    avatar:'https://yt3.ggpht.com/ytc/APkrFKYcYswt_UhD7D0j6ddiQz6Gb8Q_vSJOjhYI0CoXSw=s88-c-k-c0x00ffffff-no-rj',
+  },
+   {
+    src: 'https://i.ytimg.com/vi/tvTRZJ-4EyI/maxresdefault.jpg',
+    title: 'Kendrick Lamar - HUMBLE (Official Video)',
+    channel: 'Kendrick Lamar',
+    views: '935M views',
+    createdAt: '6 years ago',
+    id: "tvTRZJ-4EyI",
+    avatar:"https://yt3.googleusercontent.com/V4FqOieQ9y9dnErXPUZNWl1hyLafxIK7F55n5M8LVhPBmEou8kAbNuMlUZx23DoJHvH1sWG56No=s176-c-k-c0x00ffffff-no-rj-mo"
   },
   {
-    src: 'https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA',
-    title: 'Queen - Greatest Hits',
-    channel: 'Queen Official',
-    views: '40M views',
-    createdAt: '3 years ago',
+    src: 'https://i.ytimg.com/vi/PtRf6VS15oM/maxresdefault.jpg',
+    title: 'Race Highlights | 2023 Mexico City Grand Prix',
+    channel: 'FORMULA 1',
+    views: '855K views',
+    createdAt: '10 hours ago',
+    id: "PtRf6VS15oM",
+    avatar:"https://yt3.ggpht.com/tyLW5LsJGwr4ViM30OeYbuLcu_MXfpRzP8y-X9_aKfTNJeMFHmnNbPyxxhaFDA9NRgwEu9mT-g=s88-c-k-c0x00ffffff-no-rj"
   },
+ 
   {
-    src: 'https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw',
-    title: 'Calvin Harris, Sam Smith - Promises (Official Video)',
-    channel: 'Calvin Harris',
-    views: '130M views',
+    src: 'https://i.ytimg.com/vi/5MuIMqhT8DM/maxresdefault.jpg',
+    title: 'Sleep is your superpower | Matt Walker',
+    channel: 'TED',
+    views: '23M views',
     createdAt: '10 months ago',
+    id: "5MuIMqhT8DM",
+    avatar:"https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
   },
 ];
 
 interface MediaProps {
   loading?: boolean;
+  open?: boolean;
 }
 
 function Media(props: MediaProps) {
-  const { loading = false } = props;
+  const { loading = false, open } = props;
+  const router = useRouter();
+  const handleView = (id: string, title: string) => {
+    router.push(
+      {
+        pathname: "/watch",
+        query: {
+          id,
+          title
+        },
+      },
+      `/watch?v=${id}`
+    );
+  };
 
   return (
     <Grid container wrap="nowrap">
-      {(loading ? Array.from(new Array(3)) : data).map((item, index) => (
-        <Box key={index} sx={{ width: 400, marginRight: 0.5, my: 3, p: 1, cursor: "pointer" }}>
+      {(loading ? Array.from(new Array(4)) : data).map((item, index) => (
+        <Box
+          key={item?.id}
+          sx={{ width: "auto", marginRight: 0.5, my: 3, p: 1, cursor: "pointer" }}
+          onClick={() => handleView(item.id, item.title)}
+        >
           {item ? (
             <img
-              style={{ width: "100%", height: 220, borderRadius: "10px" }}
+              style={{ width: open ? 383 : 300, height: open ? 220 : 180, borderRadius: "10px" }}
               alt={item.title}
               src={item.src}
             />
           ) : (
-            <Skeleton variant="rectangular" width={380} height={220} sx={{ borderRadius: "10px" }} />
+            <Skeleton variant="rectangular" width={open ? 383 : 300} height={open ? 220 : 180} sx={{ borderRadius: "10px" }} />
           )}
-          {item ? (
-            <Box sx={{ pr: 2 }}>
-              <Typography gutterBottom variant="subtitle1">
-                {item.title}
-              </Typography>
-              {/* <ListItemButton>
-                <ListItemAvatar>
-                  <Avatar
-                    src={item.src}
-                  />
-                </ListItemAvatar>
-                <ListItemText primary={item.title} />
-              </ListItemButton> */}
-              <Typography display="block" variant="caption" color="text.secondary">
-                {item.channel}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {`${item.views} • ${item.createdAt}`}
-              </Typography>
-            </Box>
+          {!item ? (
+            <CardHeader
+              avatar={
+                <Skeleton animation="wave" variant="circular" width={40} height={40} />
+              }
+              title={
+                <Skeleton
+                  animation="wave"
+                  height={10}
+                  width="80%"
+                  style={{ marginBottom: 6 }}
+                />
+              }
+              subheader={
+                <Skeleton animation="wave" height={10} width="40%" />
+              }
+            />
+
+
           ) : (
-            <Box sx={{ pt: 0.5 }}>
-              <Skeleton />
-              <Skeleton width="60%" />
-            </Box>
+            <CardHeader
+              sx={{ alignItems: "flex-start" }}
+              avatar={
+                <Avatar
+                  alt="Ted talk"
+                  src={item.avatar}
+                />
+              }
+              title={
+                <Typography  sx={{fontWeight:"bold",fontSize:"0.9rem",letterSpacing: "1px"}}>
+                  {item.title}
+                </Typography>
+              }
+              subheader={
+                <>
+                  <Typography display="block" variant="caption" color="text.secondary">
+                    {item.channel}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {`${item.views} • ${item.createdAt}`}
+                  </Typography>
+                </>
+              }
+            />
           )}
         </Box>
       ))}
@@ -163,17 +217,9 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   marginLeft: "0.5rem"
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
+const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
+  '& .MuiCardHeader': {
+    alignItems: "start",
   },
 }));
 
@@ -237,6 +283,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    borderRight:"none",
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -280,6 +327,8 @@ export default function PrimarySearchAppBar() {
 
   const [open, setOpen] = React.useState(false);
   const loading = false
+
+
 
 
   const handleDrawerOpen = () => {
@@ -522,6 +571,7 @@ export default function PrimarySearchAppBar() {
       <AppBar position="fixed" color="inherit" elevation={0}>
         <Toolbar>
           <IconButton
+          sx={{display: { xs: 'none', md: 'flex' }}}
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -541,11 +591,11 @@ export default function PrimarySearchAppBar() {
               placeholder="   Search"
               inputProps={{ 'aria-label': 'search youtube' }}
             />
-            <Paper sx={{ borderTopRightRadius: "50px", borderBottomRightRadius: "50px", bgColor: "red" }}>
+            <Paper sx={{ borderTopRightRadius: "50px", borderBottomRightRadius: "50px"}} elevation={0}>
               <Divider orientation="vertical" />
-              <IconButton color="primary" sx={{ p: '10px' }} aria-label="search">
+              <StyledIconButton color="primary" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />
-              </IconButton>
+              </StyledIconButton>
             </Paper>
           </Paper>
           <StyledIconButton sx={{ display: { xs: 'none', md: 'flex' } }} >
@@ -651,7 +701,7 @@ export default function PrimarySearchAppBar() {
           </Typography>
         </Stack>
       </Menu>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{display: { xs: 'none', md: 'flex' }}}>
         <DrawerHeader>
         </DrawerHeader>
         <List>
@@ -676,7 +726,7 @@ export default function PrimarySearchAppBar() {
               <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0, fontSize: "0.5rem", }} />
             </ListItemButton>
             {!open &&
-              <Typography sx={{ fontSize: "0.6rem", fontWeight: "490", mb: 1 }} align="center" >Home</Typography>
+              <Typography sx={{ fontSize: "0.6rem", fontWeight: "bold", mb: 1 }} align="center" >Home</Typography>
             }
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }} >
@@ -687,14 +737,14 @@ export default function PrimarySearchAppBar() {
                 px: 2.5,
               }}
             >
-               <ListItemIcon
+              <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                 }}
               >
-                <PlayCircleFilledOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 30, fill: "#000" }} />
+                <PlayCircleFilledOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />
               </ListItemIcon>
               <ListItemText primary="Shorts" sx={{ opacity: open ? 1 : 0, fontSize: "0.5rem" }} />
             </ListItemButton>
@@ -717,7 +767,7 @@ export default function PrimarySearchAppBar() {
                   justifyContent: 'center',
                 }}
               >
-                <SubscriptionsOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 30, fill: "#000" }} />
+                <SubscriptionsOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />
               </ListItemIcon>
               <ListItemText primary="Subscription" sx={{ opacity: open ? 1 : 0, fontSize: "0.2rem" }} />
             </ListItemButton>
@@ -746,7 +796,7 @@ export default function PrimarySearchAppBar() {
                 <ListItemText primary="Subscription" sx={{ opacity: open ? 1 : 0, fontSize: "0.2rem" }} />
               </ListItemButton>
 
-              <Typography sx={{ fontSize: "0.6rem", fontWeight: "490" }} align="center" >You</Typography>
+              <Typography  sx={{ fontSize: "0.6rem", fontWeight: "490" }} align="center" >You</Typography>
 
             </ListItem>
           }
@@ -847,11 +897,11 @@ export default function PrimarySearchAppBar() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Media />
-        <Media loading />
-        <Media loading />
-        <Media loading />
-        <Media loading />
+        <Media open={open} />
+        <Media loading open={open} />
+        <Media loading open={open} />
+        <Media loading open={open} />
+        <Media loading open={open} />
       </Box>
     </Box>
   );
