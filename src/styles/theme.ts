@@ -14,13 +14,12 @@ const theme = createTheme({
     primary: { main: "#15192D" },
     secondary: { main: "#000" },
     warning: { main: "#c1004b" },
-    divider: "#c8ccd0",
     text: {
       primary: "#000",
-      secondary: "#9F7582",
+      secondary: "grey",
     },
     background: {
-      default: "#f7f9fc",
+      default: "#ffff",
       paper: "#FFFF",
     }
   },
