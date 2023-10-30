@@ -14,11 +14,11 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, emotionCache = clientSideEmotionCache, pageProps }: AppPropsWithLayout) {
   return (
-    // <CacheProvider value={emotionCache}>
-    //   <ThemeProvider theme={ThemeOptions}>
-    //     <CssBaseline />
+    <CacheProvider value={emotionCache}>
+      <ThemeProvider theme={ThemeOptions}>
+        <CssBaseline />
         <Component {...pageProps} />
-    //   </ThemeProvider>
-    // </CacheProvider>
+      </ThemeProvider>
+    </CacheProvider>
   )
 }
