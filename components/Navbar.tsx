@@ -283,7 +283,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    borderRight:"none",
+    borderRight:"none ",
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -404,16 +404,16 @@ export default function PrimarySearchAppBar() {
         <>
           <List sx={{ bgcolor: 'background.paper' }}>
             <ListItem>
-              <Avatar src="https://yt3.ggpht.com/yti/ADpuP3OnvT0N-o1FPFYmxTFMifN5FEwud9LOrTODFw=s88-c-k-c0x00ffffff-no-rj" />
+              <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ bgcolor: "purple"  }} />
 
-              <ListItemText primary="king carter" secondary={
+              <ListItemText primary="Jeff Ubayi" secondary={
                 <Stack>
                   <Typography
                     sx={{ display: 'inline' }}
                     component="div"
                     variant="body2"
                   >
-                    @kingcarter4408
+                    @ubeezy4408
                   </Typography>
                   <Typography
                     sx={{ color: "#095ED5", cursor: "pointer", mt: 1, mb: -1 }}
@@ -630,7 +630,7 @@ export default function PrimarySearchAppBar() {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar src="https://yt3.ggpht.com/yti/ADpuP3OnvT0N-o1FPFYmxTFMifN5FEwud9LOrTODFw=s88-c-k-c0x00ffffff-no-rj" sx={{ width: 34, height: 33 }} />
+                <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ width: 34, height: 33, bgcolor: "purple" }} />
               </IconButton>
             </Box>
           ) : (
