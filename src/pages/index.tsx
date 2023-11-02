@@ -1,9 +1,11 @@
+'use client'
+
 import Head from 'next/head'
 import Header from '../../components/Navbar'
 
 export default function Home() {
   return (
-    <>
+    <div>
       <Head>
         <title>YouTube</title>
         <meta name="description" content="Youtube clone" />
@@ -11,6 +13,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header/>
-    </>
+    </div>
   )
 }

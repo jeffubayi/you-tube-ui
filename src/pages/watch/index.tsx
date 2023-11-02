@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -75,13 +76,14 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 export default function FullScreenDialog() {
     const [openDialog, setOpenDialog] = React.useState(true);
     const [open, setOpen] = React.useState(false);
+    const [pageTitle, setPageTitle] = React.useState()
     const loading = false
     const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
     const [chipData, setChipData] = React.useState<readonly ChipData[]>([
         { key: 0, label: 'All' },
-        { key: 2, label: 'Live' },
-        { key: 3, label: 'Related' },
-        { key: 4, label: 'Watched' },
+        { key: 1, label: 'Live' },
+        { key: 6, label: 'Related' },
+        { key: 7, label: 'Watched' },
     ]);
 
     const handleDelete = (chipToDelete: ChipData) => () => {
@@ -112,15 +114,14 @@ export default function FullScreenDialog() {
             desc: "Kendrick Lamar DAMN. Available now http://smarturl.it/DAMN Prod: Anthony Top Dawg Tiffith, Dave Free Nathan K. Scherrer, Jason Baum, Jamie Rabineau"
         },
         {
-            src: 'https://i.ytimg.com/vi/PtRf6VS15oM/maxresdefault.jpg',
-            title: 'Race Highlights | 2023 Mexico City Grand Prix',
-            channel: 'FORMULA 1',
-            views: '855K views',
+            src: 'https://i.ytimg.com/vi/zhEWqfP6V_w/maxresdefault.jpg',
+            title: "FIFA World Cup Qatar 2022 Highlights | Argentina v France ",
+            channel: 'FIFA',
+            views: '17.1M views',
             createdAt: '10 hours ago',
-            subs: '2M',
-            id: "PtRf6VS15oM",
-            avatar: "https://yt3.ggpht.com/tyLW5LsJGwr4ViM30OeYbuLcu_MXfpRzP8y-X9_aKfTNJeMFHmnNbPyxxhaFDA9NRgwEu9mT-g=s88-c-k-c0x00ffffff-no-rj",
-            desc: "Catch up on all the key moments from our 71-lap race around Autodromo Hermanos Rodriguez.  For more F1® videos, visit https://www.Formula1.com"
+            id: "zhEWqfP6V_w",
+            avatar: "https://yt3.ggpht.com/GV75cdGEHaUZnQ_oJIzj_tGzLZCX2RyDKhn_75fFW6Mf_dpi8Fn6TaevTNhbrtLLBpk0upYt=s88-c-k-c0x00ffffff-no-rj",
+            desc: "Watch highlights of Argentina v France's Final at the FIFA World Cup Qatar 2022. "
         },
 
         {
@@ -178,6 +179,10 @@ export default function FullScreenDialog() {
         setNotificationAnchorEl(null);
     };
 
+    React.useEffect(() => {
+
+    }, []);
+
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -204,16 +209,13 @@ export default function FullScreenDialog() {
 
     return (
         <div>
-            <>
-
-            </>
             <Dialog
                 fullScreen
                 open={openDialog}
                 onClose={handleCloseDialog}
                 TransitionComponent={Transition}
             >
-                <AppBar sx={{ position: 'relative' }} color="inherit" elevation={0}>
+                <AppBar sx={{ position: 'relative', py: -1 }} color="inherit" elevation={0}>
                     <Toolbar>
                         <IconButton
                             edge="start"
@@ -222,7 +224,8 @@ export default function FullScreenDialog() {
                         >
                             <MenuIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} onClick={handleCloseDialog} />
                         </IconButton>
-                        <Image src={theme.palette.mode === 'dark' ? "/YouTube-White.png" : "/YouTube.png"} alt="logo" width={117} height={75} quality={97} />
+                        <Image src={theme.palette.mode === 'dark' ? "/YouTube-White.png" : "/YouTube.png"} alt="logo" width={117} height={75} quality={97} onClick={handleCloseDialog} style={{ cursor: "pointer" }} />
+
                         <Box sx={{ flexGrow: 1 }} />
                         <Paper
 
@@ -302,16 +305,19 @@ export default function FullScreenDialog() {
                     </Head>
                     <Grid container spacing={3}>
                         <Grid item md={8} xs={12} sx={{ maxHeight: isSmallScreen ? 300 : "70vh" }} mb={3}>
-                            <ReactPlayer
-                                url={`https://www.youtube.com/watch?v=${data[currentVideoIndex].id}`}
-                                style={{ borderRadius: "10px" }}
-                                light={data[currentVideoIndex].src}
-                                controls
-                                playing
-                                width="100%"
-                                height="100%"
-                                onEnded={playNextVideo}
-                            />
+                            <div className='player-wrapper'>
+                                <ReactPlayer
+                                    url={`https://www.youtube.com/watch?v=${data[currentVideoIndex].id}`}
+                                    light={data[currentVideoIndex].src}
+                                    controls
+                                    playing
+                                    width="100%"
+                                    height="100%"
+                                    className='react-player'
+                                    onEnded={playNextVideo}
+
+                                />
+                            </div>
                             <List
                                 sx={{ mt: 1 }}
                                 subheader={
@@ -327,14 +333,14 @@ export default function FullScreenDialog() {
                                     sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -2 }}
                                     secondaryAction={
                                         <Stack direction="row" spacing={2}>
-                                            <Chip  icon={<NotificationsActiveOutlinedIcon/>}label="Subscribe" sx={{bgColor:"red"}}/>
-                                            <Chip icon={<ThumbUpOutlinedIcon/>} label="like" />
+                                            <Chip icon={<NotificationsActiveOutlinedIcon />} label="Subscribe" sx={{ bgColor: "red" }} />
+                                            <Chip icon={<ThumbUpOutlinedIcon />} label="like" />
                                             <Chip icon={<ThumbDownOffAltOutlinedIcon />} label="dislike" />
-                                            <Chip  icon={<ReplyOutlinedIcon />}label="Share" />
+                                            <Chip icon={<ReplyOutlinedIcon />} label="Share" />
                                             <IconButton
                                                 size="small"
                                             >
-                                                <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }}  />
+                                                <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} />
                                             </IconButton>
                                         </Stack>
                                     }
@@ -468,7 +474,7 @@ export default function FullScreenDialog() {
                                                     }
                                                 >
                                                     <ListItemAvatar >
-                                                        <Avatar variant="square" sx={{ height: "5rem", width: "9rem", borderRadius: "0.3rem" }} src={video.src} />
+                                                        <Avatar variant="square" sx={{ height: "5rem", width: "9rem", borderRadius: "0.5rem" }} src={video.src} />
                                                     </ListItemAvatar>
                                                     <ListItemText sx={{ ml: 1 }} primary={
                                                         <Typography variant="subtitle2">{video.title}</Typography>

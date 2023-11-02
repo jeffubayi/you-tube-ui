@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react';
 import { styled, alpha, useTheme } from '@mui/material/styles';
 import { Avatar, Box, CardHeader, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
@@ -51,6 +52,61 @@ import ListSubheader from '@mui/material/ListSubheader';
 import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
 import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
 import { useRouter } from 'next/router';
+import WhatshotIcon from '@mui/icons-material/WhatshotOutlined';
+import MusicNoteIcon from '@mui/icons-material/MusicNoteOutlined';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsportsOutlined';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEventsOutlined';
+import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
+
+const explore = [
+  {
+    icon: <WhatshotIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Trending',
+
+  },
+  {
+    icon: <MusicNoteIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Music',
+
+  },
+  {
+    icon: <SportsEsportsIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Games',
+
+  },
+  {
+    icon: <EmojiEventsIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Sports',
+
+  },
+
+
+];
+
+const sets = [
+  {
+    icon: <Settings sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Settings',
+
+  },
+  {
+    icon: <MusicNoteIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Report history',
+
+  },
+  {
+    icon: <HelpOutlineOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Help',
+
+  },
+  {
+    icon: <FeedbackOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />,
+    title: 'Send feedback',
+
+  },
+
+
+];
 
 
 const data = [
@@ -61,27 +117,27 @@ const data = [
     views: '3.2M views',
     createdAt: '2 years ago',
     id: "w7ejDZ8SWv8&t=5111s",
-    avatar:'https://yt3.ggpht.com/ytc/APkrFKYcYswt_UhD7D0j6ddiQz6Gb8Q_vSJOjhYI0CoXSw=s88-c-k-c0x00ffffff-no-rj',
+    avatar: 'https://yt3.ggpht.com/ytc/APkrFKYcYswt_UhD7D0j6ddiQz6Gb8Q_vSJOjhYI0CoXSw=s88-c-k-c0x00ffffff-no-rj',
   },
-   {
+  {
     src: 'https://i.ytimg.com/vi/tvTRZJ-4EyI/maxresdefault.jpg',
     title: 'Kendrick Lamar - HUMBLE (Official Video)',
     channel: 'Kendrick Lamar',
     views: '935M views',
     createdAt: '6 years ago',
     id: "tvTRZJ-4EyI",
-    avatar:"https://yt3.googleusercontent.com/V4FqOieQ9y9dnErXPUZNWl1hyLafxIK7F55n5M8LVhPBmEou8kAbNuMlUZx23DoJHvH1sWG56No=s176-c-k-c0x00ffffff-no-rj-mo"
+    avatar: "https://yt3.googleusercontent.com/V4FqOieQ9y9dnErXPUZNWl1hyLafxIK7F55n5M8LVhPBmEou8kAbNuMlUZx23DoJHvH1sWG56No=s176-c-k-c0x00ffffff-no-rj-mo"
   },
   {
-    src: 'https://i.ytimg.com/vi/PtRf6VS15oM/maxresdefault.jpg',
-    title: 'Race Highlights | 2023 Mexico City Grand Prix',
-    channel: 'FORMULA 1',
-    views: '855K views',
+    src: 'https://i.ytimg.com/vi/zhEWqfP6V_w/maxresdefault.jpg',
+    title: "FIFA World Cup Qatar 2022 Highlights | Argentina v France ",
+    channel: 'FIFA',
+    views: '17.1M views',
     createdAt: '10 hours ago',
-    id: "PtRf6VS15oM",
-    avatar:"https://yt3.ggpht.com/tyLW5LsJGwr4ViM30OeYbuLcu_MXfpRzP8y-X9_aKfTNJeMFHmnNbPyxxhaFDA9NRgwEu9mT-g=s88-c-k-c0x00ffffff-no-rj"
+    id: "zhEWqfP6V_w",
+    avatar: "https://yt3.ggpht.com/GV75cdGEHaUZnQ_oJIzj_tGzLZCX2RyDKhn_75fFW6Mf_dpi8Fn6TaevTNhbrtLLBpk0upYt=s88-c-k-c0x00ffffff-no-rj"
   },
- 
+
   {
     src: 'https://i.ytimg.com/vi/5MuIMqhT8DM/maxresdefault.jpg',
     title: 'Sleep is your superpower | Matt Walker',
@@ -89,7 +145,7 @@ const data = [
     views: '23M views',
     createdAt: '10 months ago',
     id: "5MuIMqhT8DM",
-    avatar:"https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+    avatar: "https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
   },
 ];
 
@@ -124,7 +180,7 @@ function Media(props: MediaProps) {
         >
           {item ? (
             <img
-              style={{ width: open ? 383 : 300, height: open ? 220 : 180, borderRadius: "10px" }}
+              style={{ width: open ? 383 : "auto", height: open ? 220 : 180, borderRadius: "10px" }}
               alt={item.title}
               src={item.src}
             />
@@ -155,12 +211,12 @@ function Media(props: MediaProps) {
               sx={{ alignItems: "flex-start" }}
               avatar={
                 <Avatar
-                  alt="Ted talk"
+                  alt="avatar"
                   src={item.avatar}
                 />
               }
               title={
-                <Typography  sx={{fontWeight:"bold",fontSize:"0.9rem",letterSpacing: "1px"}}>
+                <Typography display="block" sx={{ fontWeight: "bold", fontSize: "0.9rem", letterSpacing: "1px" }} >
                   {item.title}
                 </Typography>
               }
@@ -181,6 +237,16 @@ function Media(props: MediaProps) {
     </Grid>
   );
 }
+
+
+interface ChipData {
+  key: number;
+  label: string;
+}
+
+const ChipItem = styled('li')(({ theme }) => ({
+  margin: theme.spacing(0.1),
+}));
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -283,7 +349,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    borderRight:"none ",
+    borderRight: "none ",
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -305,6 +371,25 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [anchorNotificationEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
   const openNotification = Boolean(anchorNotificationEl);
+  const [chipData, setChipData] = React.useState<readonly ChipData[]>([
+    { key: 0, label: 'All' },
+    { key: 1, label: 'Live' },
+    { key: 2, label: 'Music' },
+    { key: 3, label: 'Sports' },
+    { key: 4, label: 'Games' },
+    { key: 5, label: 'Comedy' },
+    { key: 6, label: 'Playlists' },
+    { key: 7, label: 'Podcasts' },
+    { key: 8, label: 'Mr Beast' },
+    { key: 7, label: 'Recently uploaded' },
+    { key: 8, label: 'Anime' },
+    { key: 9, label: 'React' },
+    { key: 10, label: 'Kendrick Lamar' },
+    { key: 11, label: 'Trending' },
+  ]);
+  const handleDelete = (chipToDelete: ChipData) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotificationAnchorEl(event.currentTarget);
   };
@@ -404,7 +489,7 @@ export default function PrimarySearchAppBar() {
         <>
           <List sx={{ bgcolor: 'background.paper' }}>
             <ListItem>
-              <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ bgcolor: "purple"  }} />
+              <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ bgcolor: "purple" }} />
 
               <ListItemText primary="Jeff Ubayi" secondary={
                 <Stack>
@@ -571,7 +656,7 @@ export default function PrimarySearchAppBar() {
       <AppBar position="fixed" color="inherit" elevation={0}>
         <Toolbar>
           <IconButton
-          sx={{display: { xs: 'none', md: 'flex' }}}
+            sx={{ display: { xs: 'none', md: 'flex' } }}
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -591,7 +676,7 @@ export default function PrimarySearchAppBar() {
               placeholder="   Search"
               inputProps={{ 'aria-label': 'search youtube' }}
             />
-            <Paper sx={{ borderTopRightRadius: "50px", borderBottomRightRadius: "50px"}} elevation={0}>
+            <Paper sx={{ borderTopRightRadius: "50px", borderBottomRightRadius: "50px" }} elevation={0}>
               <Divider orientation="vertical" />
               <StyledIconButton color="primary" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />
@@ -695,13 +780,13 @@ export default function PrimarySearchAppBar() {
             Your notifications live here
           </Typography>
 
-          <Typography variant='caption' sx={{ px: 12, color: "#606060" }} noWrap>
+          <Typography variant='caption' sx={{ px: 12, color: "#606060" }} align="center" noWrap>
 
             Subscribe to your favorite channels to<br></br> receive notifications about their latest<br></br> videos.
           </Typography>
         </Stack>
       </Menu>
-      <Drawer variant="permanent" open={open} sx={{display: { xs: 'none', md: 'flex' }}}>
+      <Drawer variant="permanent" open={open} sx={{ display: { xs: 'none', md: 'flex' } }}>
         <DrawerHeader>
         </DrawerHeader>
         <List>
@@ -737,16 +822,16 @@ export default function PrimarySearchAppBar() {
                 px: 2.5,
               }}
             >
-              <ListItemIcon
+              <ListItemAvatar
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                 }}
               >
-                <PlayCircleFilledOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, fill: "#000" }} />
-              </ListItemIcon>
-              <ListItemText primary="Shorts" sx={{ opacity: open ? 1 : 0, fontSize: "0.5rem" }} />
+                <Avatar sx={{ height: "2rem", width: "2rem" }} src="https://i.pinimg.com/originals/a6/e9/32/a6e932111d00d40b9fb129154bdbc616.png" />
+              </ListItemAvatar>
+              <ListItemText primary="Shorts" sx={{ opacity: open ? 1 : 0, fontSize: "0.5rem",ml:-1 }} />
             </ListItemButton>
             {!open &&
               <Typography sx={{ fontSize: "0.6rem", fontWeight: "490", mb: 1 }} align="center" >Shorts</Typography>
@@ -796,7 +881,7 @@ export default function PrimarySearchAppBar() {
                 <ListItemText primary="Subscription" sx={{ opacity: open ? 1 : 0, fontSize: "0.2rem" }} />
               </ListItemButton>
 
-              <Typography  sx={{ fontSize: "0.6rem", fontWeight: "490" }} align="center" >You</Typography>
+              <Typography sx={{ fontSize: "0.6rem", fontWeight: "490" }} align="center" >You</Typography>
 
             </ListItem>
           }
@@ -806,8 +891,8 @@ export default function PrimarySearchAppBar() {
             <>
               <Divider />
               <List subheader={<ListSubheader sx={{ fontWeight: "bold", color: "#000" }}>Explore</ListSubheader>}>
-                {['Trending', 'Music', 'Games', "Sports"].map((text, index) => (
-                  <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                {explore.map((text, index) => (
+                  <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                       sx={{
                         minHeight: 48,
@@ -822,9 +907,9 @@ export default function PrimarySearchAppBar() {
                           justifyContent: 'center',
                         }}
                       >
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        {text.icon}
                       </ListItemIcon>
-                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                      <ListItemText primary={text.title} sx={{ opacity: open ? 1 : 0 }} />
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -840,24 +925,24 @@ export default function PrimarySearchAppBar() {
                         px: 2.5,
                       }}
                     >
-                      <ListItemIcon
+                      <ListItemAvatar
                         sx={{
                           minWidth: 0,
                           mr: open ? 3 : 'auto',
                           justifyContent: 'center',
                         }}
                       >
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                      </ListItemIcon>
-                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                        <Avatar sx={{ height: "2rem", width: "2rem" }} src={index % 2 === 0 ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStNoSlWjFn8GXQYLHbuhQ4QJIReq_4RSzVcVGIknfp6LFyktukZqSdlzTZ86N9OmiuAg8&usqp=CAU" : "https://play-lh.googleusercontent.com/S4wylkvt2jz16hnG9IG0pAZosbB82nWWy8P-rQkb54uH-SCVd5L2j7z7x1Vz5pZvIRc"} />
+                      </ListItemAvatar>
+                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 ,ml:-1}} />
                     </ListItemButton>
                   </ListItem>
                 ))}
               </List>
               <Divider />
               <List >
-                {['Settings', 'Report history', 'Help', "Send feedback"].map((text, index) => (
-                  <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                {sets.map((text, index) => (
+                  <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                       sx={{
                         minHeight: 48,
@@ -872,9 +957,9 @@ export default function PrimarySearchAppBar() {
                           justifyContent: 'center',
                         }}
                       >
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        {text.icon}
                       </ListItemIcon>
-                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                      <ListItemText primary={text.title} sx={{ opacity: open ? 1 : 0 }} />
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -897,8 +982,36 @@ export default function PrimarySearchAppBar() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
+        <Paper
+          elevation={0}
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            listStyle: 'none',
+            p: 0.5,
+            m: 0,
+          }}
+          component="ul"
+        >
+          {chipData.map((data) => {
+            let icon;
+
+
+            return (
+              <ChipItem key={data.key}>
+                <Chip
+                  sx={{ borderRadius: "8px", fontWeight: "bold", mx: 0.7 }}
+                  color={data.label == "All" ? "primary" : "secondary"}
+                  icon={icon}
+                  label={data.label}
+                // onDelete={handleDelete(data)}
+                />
+              </ChipItem>
+            );
+          })}
+        </Paper>
         <Media open={open} />
-        <Media loading open={open} />
+        <Media  open={open} />
         <Media loading open={open} />
         <Media loading open={open} />
         <Media loading open={open} />
