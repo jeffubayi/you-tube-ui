@@ -129,13 +129,13 @@ const data = [
     avatar: "https://yt3.googleusercontent.com/V4FqOieQ9y9dnErXPUZNWl1hyLafxIK7F55n5M8LVhPBmEou8kAbNuMlUZx23DoJHvH1sWG56No=s176-c-k-c0x00ffffff-no-rj-mo"
   },
   {
-    src: 'https://i.ytimg.com/vi/zhEWqfP6V_w/maxresdefault.jpg',
-    title: "FIFA World Cup Qatar 2022 Highlights | Argentina v France ",
-    channel: 'FIFA',
-    views: '17.1M views',
+    src: 'https://pbs.twimg.com/media/Fx64bHkaUAAEcQ_.jpg:large',
+    title: "Apple Vision Pro Impressions! ",
+    channel: 'Marques Brownlee',
+    views: '17M views',
     createdAt: '10 hours ago',
-    id: "zhEWqfP6V_w",
-    avatar: "https://yt3.ggpht.com/GV75cdGEHaUZnQ_oJIzj_tGzLZCX2RyDKhn_75fFW6Mf_dpi8Fn6TaevTNhbrtLLBpk0upYt=s88-c-k-c0x00ffffff-no-rj"
+    id: "OFvXuyITwBI&t=405s",
+    avatar: "https://yt3.googleusercontent.com/lkH37D712tiyphnu0Id0D5MwwQ7IRuwgQLVD05iMXlDWO-kDHut3uI4MgIEAQ9StK0qOST7fiA=s176-c-k-c0x00ffffff-no-rj"
   },
 
   {
@@ -654,7 +654,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" color="inherit" elevation={0}>
-        <Toolbar>
+        <Toolbar sx={{my:-0.8}}>
           <IconButton
             sx={{ display: { xs: 'none', md: 'flex' } }}
             edge="start"
@@ -988,8 +988,8 @@ export default function PrimarySearchAppBar() {
             display: 'flex',
             flexWrap: 'wrap',
             listStyle: 'none',
-            p: 0.5,
-            m: 0,
+            px: 0.5,
+            my: -1,
           }}
           component="ul"
         >
