@@ -114,14 +114,15 @@ export default function FullScreenDialog() {
             desc: "Kendrick Lamar DAMN. Available now http://smarturl.it/DAMN Prod: Anthony Top Dawg Tiffith, Dave Free Nathan K. Scherrer, Jason Baum, Jamie Rabineau"
         },
         {
-            src: 'https://i.ytimg.com/vi/zhEWqfP6V_w/maxresdefault.jpg',
-            title: "FIFA World Cup Qatar 2022 Highlights | Argentina v France ",
-            channel: 'FIFA',
-            views: '17.1M views',
+            src: 'https://pbs.twimg.com/media/Fx64bHkaUAAEcQ_.jpg:large',
+            title: "Apple Vision Pro Impressions! ",
+            channel: 'Marques Brownlee',
+            views: '17M views',
             createdAt: '10 hours ago',
-            id: "zhEWqfP6V_w",
-            avatar: "https://yt3.ggpht.com/GV75cdGEHaUZnQ_oJIzj_tGzLZCX2RyDKhn_75fFW6Mf_dpi8Fn6TaevTNhbrtLLBpk0upYt=s88-c-k-c0x00ffffff-no-rj",
-            desc: "Watch highlights of Argentina v France's Final at the FIFA World Cup Qatar 2022. "
+             subs: '17.3M',
+            id: "OFvXuyITwBI&t=405s",
+            avatar: "https://yt3.googleusercontent.com/lkH37D712tiyphnu0Id0D5MwwQ7IRuwgQLVD05iMXlDWO-kDHut3uI4MgIEAQ9StK0qOST7fiA=s176-c-k-c0x00ffffff-no-rj",
+            desc: "I tried Apple's first ever spatial computing device, a $3500 VR headset. These are my honest thoughts.. "
         },
 
         {
@@ -330,7 +331,7 @@ export default function FullScreenDialog() {
                             >
 
                                 <ListItem
-                                    sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -2 }}
+                                    sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -1.7 }}
                                     secondaryAction={
                                         <Stack direction="row" spacing={2}>
                                             <Chip icon={<NotificationsActiveOutlinedIcon />} label="Subscribe" sx={{ bgColor: "red" }} />
