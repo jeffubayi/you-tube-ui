@@ -33,7 +33,7 @@ export default function YoutubeVideoCard(props: YoutubeVideoCardProps) {
               xs={12}
               sm={12}
               md={open ? 4 : 3}
-              lg={open ? 4 : 2}
+              lg={open ? 4 : 3}
               xl={open ? 3 : 2.4}
               key={index}
               mt={1}

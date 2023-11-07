@@ -57,7 +57,7 @@ function filterComponent(props: ChipData) {
                             color={data.label == "All" ? "primary" : "secondary"}
                             icon={icon}
                             label={data.label}
-                            onDelete={handleDelete(data)}
+                            // onDelete={handleDelete(data)}
                         />
                     </ChipItem>
                 );
