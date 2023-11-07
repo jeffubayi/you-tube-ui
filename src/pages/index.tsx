@@ -1,18 +1,14 @@
 'use client'
-
 import Head from 'next/head'
-import Header from '../../components/Navbar'
+import Views from '../../components/topBar'
 
 export default function Home() {
   return (
     <div>
       <Head>
         <title>YouTube</title>
-        <meta name="description" content="Youtube clone" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
+      <Views/>
     </div>
   )
 }

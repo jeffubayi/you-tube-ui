@@ -14,7 +14,6 @@ import { TransitionProps } from '@mui/material/transitions';
 import Head from 'next/head'
 import { styled, alpha, useTheme } from '@mui/material/styles';
 import { useRouter } from "next/router";
-import theme from '@/styles/theme';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
@@ -26,35 +25,15 @@ import Image from 'next/image';
 import { Box, Paper, InputBase, Tooltip, TextField, Skeleton, useMediaQuery, ListSubheader, Badge, Avatar, Chip, Collapse, ListItemAvatar, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ReactPlayer from 'react-player'
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import { ExpandMore } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import TagFacesIcon from '@mui/icons-material/TagFaces';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-
-interface ChipData {
-    key: number;
-    label: string;
-}
-
-const ChipItem = styled('li')(({ theme }) => ({
-    margin: theme.spacing(0.1),
-}));
+import { data } from "../../../utility/data";
+import ChipData from "../../../components/filterComponent";
 
 
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -76,67 +55,7 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 export default function FullScreenDialog() {
     const [openDialog, setOpenDialog] = React.useState(true);
     const [open, setOpen] = React.useState(false);
-    const [pageTitle, setPageTitle] = React.useState()
-    const loading = false
     const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
-    const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-        { key: 0, label: 'All' },
-        { key: 1, label: 'Live' },
-        { key: 6, label: 'Related' },
-        { key: 7, label: 'Watched' },
-    ]);
-
-    const handleDelete = (chipToDelete: ChipData) => () => {
-        setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-    };
-
-    const data = [
-        {
-            src: 'https://i.ytimg.com/vi/sBws8MSXN7A/maxresdefault.jpg',
-            title: 'React JS Crash Course',
-            channel: 'Traversy Media',
-            views: '3.2M views',
-            createdAt: '2 years ago',
-            subs: '2M',
-            id: "w7ejDZ8SWv8&t=5111s",
-            avatar: 'https://yt3.ggpht.com/ytc/APkrFKYcYswt_UhD7D0j6ddiQz6Gb8Q_vSJOjhYI0CoXSw=s88-c-k-c0x00ffffff-no-rj',
-            desc: "Get started with React in this crash course. We will be building a task tracker app and look at components, props, state, hooks, working with an API and more. Code:https://github.com/bradtraversy/react..."
-        },
-        {
-            src: 'https://i.ytimg.com/vi/tvTRZJ-4EyI/maxresdefault.jpg',
-            title: 'Kendrick Lamar - HUMBLE (Official Video)',
-            channel: 'Kendrick Lamar',
-            views: '935M views',
-            subs: '12.3M',
-            createdAt: '6 years ago',
-            id: "tvTRZJ-4EyI",
-            avatar: "https://yt3.googleusercontent.com/V4FqOieQ9y9dnErXPUZNWl1hyLafxIK7F55n5M8LVhPBmEou8kAbNuMlUZx23DoJHvH1sWG56No=s176-c-k-c0x00ffffff-no-rj-mo",
-            desc: "Kendrick Lamar DAMN. Available now http://smarturl.it/DAMN Prod: Anthony Top Dawg Tiffith, Dave Free Nathan K. Scherrer, Jason Baum, Jamie Rabineau"
-        },
-        {
-            src: 'https://pbs.twimg.com/media/Fx64bHkaUAAEcQ_.jpg:large',
-            title: "Apple Vision Pro Impressions! ",
-            channel: 'Marques Brownlee',
-            views: '17M views',
-            createdAt: '10 hours ago',
-             subs: '17.3M',
-            id: "OFvXuyITwBI&t=405s",
-            avatar: "https://yt3.googleusercontent.com/lkH37D712tiyphnu0Id0D5MwwQ7IRuwgQLVD05iMXlDWO-kDHut3uI4MgIEAQ9StK0qOST7fiA=s176-c-k-c0x00ffffff-no-rj",
-            desc: "I tried Apple's first ever spatial computing device, a $3500 VR headset. These are my honest thoughts.. "
-        },
-
-        {
-            src: 'https://i.ytimg.com/vi/5MuIMqhT8DM/maxresdefault.jpg',
-            title: 'Sleep is your superpower | Matt Walker',
-            channel: 'TED',
-            views: '11M views',
-            createdAt: '10 months ago',
-            subs: '23.5M',
-            id: "5MuIMqhT8DM",
-            avatar: "https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg",
-            desc: "Sleep is your life-support system and Mother Nature's best effort yet at immortality, says sleep scientist Matt Walker. In this deep dive into the science of slumber, Walker shares the wonderfully good things that happen when you get sleep -- and the alarmingly bad things that happen when you don't, for both your brain and body. Learn more about sleep's impact on your learning, memory. "
-        },
-    ];
 
     const playNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -170,6 +89,7 @@ export default function FullScreenDialog() {
     const isSmallScreen = useMediaQuery("(max-width: 600px)");
     const isMenuOpen = Boolean(anchorEl);
     const isLoggedIn = Boolean(true);
+    const isMobile = useMediaQuery("(min-width:500px)");
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [anchorNotificationEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
     const openNotification = Boolean(anchorNotificationEl);
@@ -300,9 +220,6 @@ export default function FullScreenDialog() {
                 <Box sx={{ flexGrow: 1, py: isSmallScreen ? 0 : 1, px: isSmallScreen ? 2 : 3.5 }}>
                     <Head>
                         <title>{title || data[currentVideoIndex].title}</title>
-                        <meta name="description" content="Generated by create next app" />
-                        <meta name="viewport" content="width=device-width, initial-scale=1" />
-                        <link rel="icon" href="/favicon.ico" />
                     </Head>
                     <Grid container spacing={3}>
                         <Grid item md={8} xs={12} sx={{ maxHeight: isSmallScreen ? 300 : "70vh" }} mb={3}>
@@ -329,32 +246,33 @@ export default function FullScreenDialog() {
                                     </ListSubheader>
                                 }
                             >
-
-                                <ListItem
-                                    sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -1.7 }}
-                                    secondaryAction={
-                                        <Stack direction="row" spacing={2}>
-                                            <Chip icon={<NotificationsActiveOutlinedIcon />} label="Subscribe" sx={{ bgColor: "red" }} />
-                                            <Chip icon={<ThumbUpOutlinedIcon />} label="like" />
-                                            <Chip icon={<ThumbDownOffAltOutlinedIcon />} label="dislike" />
-                                            <Chip icon={<ReplyOutlinedIcon />} label="Share" />
-                                            <IconButton
-                                                size="small"
-                                            >
-                                                <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} />
-                                            </IconButton>
-                                        </Stack>
-                                    }
-                                >
-                                    <ListItemAvatar >
-                                        <Avatar src={data[currentVideoIndex].avatar} />
-                                    </ListItemAvatar>
-                                    <ListItemText primary={
-                                        <Typography variant="subtitle1" component="div" sx={{ fontWeight: "bold" }}>
-                                            {data[currentVideoIndex].channel}
-                                        </Typography>
-                                    } secondary={`${data[currentVideoIndex].subs} subscribers`} />
-                                </ListItem >
+                                {!isSmallScreen && (
+                                    <ListItem
+                                        sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -1.7 }}
+                                        secondaryAction={
+                                            <Stack direction="row" spacing={2}>
+                                                <Chip icon={<NotificationsActiveOutlinedIcon />} label="Subscribe" sx={{ bgColor: "red" }} />
+                                                <Chip icon={<ThumbUpOutlinedIcon />} label="like" />
+                                                <Chip icon={<ThumbDownOffAltOutlinedIcon />} label="dislike" />
+                                                <Chip icon={<ReplyOutlinedIcon />} label="Share" />
+                                                <IconButton
+                                                    size="small"
+                                                >
+                                                    <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} />
+                                                </IconButton>
+                                            </Stack>
+                                        }
+                                    >
+                                        <ListItemAvatar >
+                                            <Avatar src={data[currentVideoIndex].avatar} />
+                                        </ListItemAvatar>
+                                        <ListItemText primary={
+                                            <Typography variant="subtitle1" component="div" sx={{ fontWeight: "bold" }}>
+                                                {data[currentVideoIndex].channel}
+                                            </Typography>
+                                        } secondary={`${data[currentVideoIndex].subs} subscribers`} />
+                                    </ListItem >
+                                )}
                             </List>
 
                             {/* </Stack> */}
@@ -370,9 +288,9 @@ export default function FullScreenDialog() {
                             <List sx={{ width: '100%', bgcolor: 'background.paper' }}
                                 subheader={
                                     <ListSubheader component="div" id="nested-list-subheader">
-                                        <Typography color="text.primary" sx={{ fontWeight: "bold", fontSize: "1.2rem", mt: 1 }}>
+                                        {!isSmallScreen && (<Typography color="text.primary" sx={{ fontWeight: "bold", fontSize: "1.2rem", mt: 1 }}>
                                             3 Comments
-                                        </Typography>
+                                        </Typography>)}
                                     </ListSubheader>
                                 }>
                                 <ListItem alignItems="flex-start">
@@ -380,7 +298,7 @@ export default function FullScreenDialog() {
                                         <Avatar alt="James bond" sx={{ bgcolor: "purple" }} src="/static/images/avatar/1.jpg" />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={<TextField id="standard-basic" label="add a comment" variant="standard" fullWidth />}
+                                        primary={<TextField id="standard-basic" label="Add a comment" variant="standard" fullWidth />}
 
                                     />
                                 </ListItem>
@@ -389,11 +307,21 @@ export default function FullScreenDialog() {
                                         <Avatar alt="Remy Sharp" sx={{ bgcolor: "#072346" }} src="/static/images/avatar/1.jpg" />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary="@remysharp"
+                                        primary={
+                                            <Stack direction="row" spacing={1}>
+                                                <Typography component="div" variant="caption" color="text.primary" sx={{ fontWeight: "bold" }} >
+                                                    @remysharp
+                                                </Typography>
+                                                <Typography component="div" color="text.secondary" variant="caption">
+                                                    2 days ago
+                                                </Typography>
+                                            </Stack>
+                                        }
                                         secondary={
                                             <React.Fragment>
-
-                                                {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante. Proin finibus lorem justo..."}
+                                                <Typography component="div" variant="body2" color="text.primary"  >
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante.🤣🤣🤣🤣
+                                                </Typography>
                                             </React.Fragment>
                                         }
                                     />
@@ -406,10 +334,9 @@ export default function FullScreenDialog() {
                                     <ListItemText
                                         primary="@mamamia"
                                         secondary={
-                                            <React.Fragment>
-
-                                                {" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante. Proin finibus lorem justo, a finibus velit porttitor non.Wish I could come, but I'm out of town this…"}
-                                            </React.Fragment>
+                                            <Typography component="div" variant="body2" color="text.primary"  >
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.💪🏽💪🏽💪🏽💪🏽👀 Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis.🤣🤣🤣🤣
+                                            </Typography>
                                         }
                                     />
                                 </ListItem>
@@ -421,10 +348,9 @@ export default function FullScreenDialog() {
                                     <ListItemText
                                         primary="@tomcruise"
                                         secondary={
-                                            <React.Fragment>
-
-                                                {' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante...'}
-                                            </React.Fragment>
+                                            <Typography component="div" variant="body2" color="text.primary"  >
+                                                ❤️🧡💛💚🩵💙💜🖤🩶🤍Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam....
+                                            </Typography>
                                         }
                                     />
                                 </ListItem>
@@ -432,35 +358,7 @@ export default function FullScreenDialog() {
                             </List>
                         </Grid>
                         <Grid item md={4} xs={12} mb={7}>
-                            <Paper
-                                elevation={0}
-                                sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    listStyle: 'none',
-                                    p: 0.5,
-                                    m: 0,
-                                }}
-                                component="ul"
-                            >
-                                {chipData.map((data) => {
-                                    let icon;
-
-
-                                    return (
-                                        <ChipItem key={data.key}>
-                                            <Chip
-                                                sx={{ borderRadius: "8px", mx: 1 }}
-                                                color={data.label == "All" ? "primary" : "secondary"}
-                                                icon={icon}
-                                                label={data.label}
-                                                onDelete={handleDelete(data)}
-                                            />
-                                        </ChipItem>
-                                    );
-                                })}
-                            </Paper>
-
+                            <ChipData limit={4} />
                             <div>
                                 <List sx={{ p: 1, borderRadius: "0.7rem", bgcolor: "background.paper" }}>
                                     <div>
@@ -523,8 +421,6 @@ export default function FullScreenDialog() {
                                     </div>
                                 </List>
                             </div>
-
-
                         </Grid>
                     </Grid>
                 </Box>
