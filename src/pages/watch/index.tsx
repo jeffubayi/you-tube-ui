@@ -222,7 +222,7 @@ export default function FullScreenDialog() {
                         <title>{title || data[currentVideoIndex].title}</title>
                     </Head>
                     <Grid container spacing={3}>
-                        <Grid item md={8} xs={12} sx={{ maxHeight: isSmallScreen ? 300 : "70vh" }} mb={3}>
+                        <Grid item md={8} xl={8.5} xs={12} sx={{ maxHeight: isSmallScreen ? 300 : "70vh" }} mb={3}>
                             <div className='player-wrapper'>
                                 <ReactPlayer
                                     url={`https://www.youtube.com/watch?v=${data[currentVideoIndex].id}`}
@@ -357,7 +357,7 @@ export default function FullScreenDialog() {
 
                             </List>
                         </Grid>
-                        <Grid item md={4} xs={12} mb={7}>
+                        <Grid item md={4} xl={3.5} xs={12} mb={7}>
                             <ChipData limit={4} />
                             <div>
                                 <List sx={{ p: 1, borderRadius: "0.7rem", bgcolor: "background.paper" }}>
