@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react';
 import { styled, alpha, useTheme } from '@mui/material/styles';
-import { Avatar, Box, CardHeader, useMediaQuery, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import { Avatar, Box, InputAdornment, TextField, useMediaQuery, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -21,7 +21,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import Settings from '@mui/icons-material/SettingsOutlined';
-
+import { useRouter } from "next/router";
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
 import Chip from '@mui/material/Chip';
@@ -38,13 +38,15 @@ import ChipData from "./filterComponent"
 import BottomBar from "./bottomBar"
 import RenderMenu from "./sideBar"
 import { data, explore, sets } from "../utility/data";
-
+import Autocomplete from '@mui/material/Autocomplete';
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: "#F2F2F2",
   '&:hover': {
     backgroundColor: "#D9D9D9",
+    borderRadius: "10px"
   },
   marginLeft: "0.5rem"
 }));
@@ -72,7 +74,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
+export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -131,10 +133,48 @@ export default function PrimarySearchAppBar() {
   const [anchorNotificationEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
   const openNotification = Boolean(anchorNotificationEl);
   const [open, setOpen] = React.useState(false);
+  const [showSearch, setShowSearch] = React.useState(false)
   const theme = useTheme();
   const menuId = 'primary-search-account-menu';
   const isMobile = useMediaQuery("(min-width:500px)");
   const mobileMenuId = 'primary-search-account-menu-mobile';
+  const router = useRouter();
+  const [progress, setProgress] = React.useState(0);
+  const [showProgress, setShowProgress] = React.useState(false)
+  React.useEffect(() => {
+    if (showProgress) {
+      const timer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress === 100) {
+            return 0;
+          }
+          const diff = Math.random() * 10;
+          return Math.min(oldProgress + diff, 100);
+        });
+      }, 0);
+    }
+
+    // return () => {
+    //   clearInterval(timer);
+    // };
+  }, [showProgress]);
+
+  const handleView = (id: string, title: string) => {
+    setShowProgress(true)
+    setTimeout(() => {
+      router.push(
+        {
+          pathname: "/watch",
+          query: {
+            id,
+            title
+          },
+        },
+        `/watch?v=${id}`
+      );
+    }, 2700);
+  };
+
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setNotificationAnchorEl(event.currentTarget);
@@ -258,35 +298,87 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" color="inherit" elevation={0}>
+        {showProgress && (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress variant="determinate" value={progress} color="warning" />
+          </Box>
+        )}
         <Toolbar sx={{ my: -0.8 }}>
           <IconButton
             sx={{ display: { xs: 'none', md: 'flex' } }}
             edge="start"
             color="inherit"
             aria-label="open drawer"
+            onClick={open ? handleDrawerClose : handleDrawerOpen}
           >
-            <MenuIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} onClick={open ? handleDrawerClose : handleDrawerOpen} />
+            <MenuIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} />
           </IconButton>
           <Image src={theme.palette.mode === 'dark' ? "/YouTube-White.png" : "/YouTube.png"} alt="logo" width={117} height={75} quality={97} />
           <Box sx={{ flexGrow: 1 }} />
-          <Paper
+          {/* {showSearch ? ( */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Autocomplete
+              freeSolo
+              noOptionsText="Video not available"
+              getOptionLabel={(option: any) => option?.title}
+              renderOption={(props, option) => (
+                <ListItem
+                  {...props} key={option?.id} >
+                  <ListItemIcon>
+                    <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ fontWeight: "bold" }}
+                    primary={option?.title}
+                  />
+                </ListItem>
+              )}
+              onChange={(e, value: any) => {
+                if (e.type == "click") {
+                  setShowSearch(true)
+                  handleView(value?.id, value?.title)
+                } else {
+                  setShowSearch(false)
+                }
+              }}
+              options={data}
+              renderInput={(params) =>
+                <TextField {...params}
+                  fullWidth
+                  size="small"
+                  sx={{ width: showSearch ? 540 : 450, borderRadius: "50px", borderColor: "#FFF" }}
+                  color="info"
+                  placeholder="Search"
+                  InputProps={{
+                    ...params.InputProps,
+                    style: {
+                      borderRadius: "50px 0px  0px 50px",
+                      border: "2 px solid #095ED5"
+                    },
+                    startAdornment: (
+                      <>
+                        {showSearch &&
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />
+                          </InputAdornment>
+                        }
+                      </>
+                    ),
+                  }}
 
-            elevation={0}
-            component="form"
-            sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', width: 600, borderRadius: "50px", border: "1px solid #CCCCCC", }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="   Search"
-              inputProps={{ 'aria-label': 'search youtube' }}
+                  variant="outlined"
+                />}
             />
-            <Paper sx={{ borderTopRightRadius: "50px", borderBottomRightRadius: "50px" }} elevation={0}>
-              <Divider orientation="vertical" />
-              <StyledIconButton color="primary" sx={{ p: '10px' }} aria-label="search">
+            <Paper
+              elevation={0}
+              sx={{ bgColor: "grey !important", display: 'flex', alignItems: 'center', width: 60, height: 37, borderRadius: "0px 50px  50px 0px", border: "1px solid #CCCCCC", }}
+            >
+              <IconButton type="button" sx={{ pl: '15px' }} aria-label="search" >
                 <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />
-              </StyledIconButton>
+              </IconButton>
             </Paper>
-          </Paper>
+          </Box>
+
           <StyledIconButton sx={{ display: { xs: 'none', md: 'flex' } }} >
             <Tooltip title="Search with your voice">
               <KeyboardVoiceIcon sx={{ color: "#000" }} />
@@ -297,7 +389,7 @@ export default function PrimarySearchAppBar() {
             <Box >
               <IconButton color="inherit" onClick={handleMobileMenuOpen} >
                 <Tooltip title="Create">
-                  {!isMobile ?   <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} />: <VideoCallIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 30 }} />}
+                  {!isMobile ? <SearchIcon sx={{ color: "#000", stroke: "#ffffff", strokeWidth: 0.7 }} /> : <VideoCallIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 30 }} />}
                 </Tooltip>
               </IconButton>
               <IconButton
@@ -311,17 +403,18 @@ export default function PrimarySearchAppBar() {
                   </Badge>
                 </Tooltip>
               </IconButton>
-              <IconButton
-                sx={{ display: { xs: 'none', md: 'flex' }, }}
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ width: 34, height: 33, bgcolor: "purple" }} />
-              </IconButton>
+              {isMobile && (
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar src="/static/images/avatar/1.jpg" alt="Jeff" sx={{ width: 34, height: 33, bgcolor: "purple" }} />
+                </IconButton>
+              )}
             </Box>
           ) : (
             <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>

@@ -42,7 +42,7 @@ function filterComponent(props: ChipData) {
                 flexWrap: 'wrap',
                 listStyle: 'none',
                 p: 0.5,
-                m: 0,
+                mt: -1,
             }}
             component="ul"
         >
@@ -53,7 +53,7 @@ function filterComponent(props: ChipData) {
                 return (
                     <ChipItem key={data.key}>
                         <Chip
-                            sx={{ borderRadius: "8px", mx: 1 }}
+                            sx={{ borderRadius: "8px", mx: 1,fontWeight:"bold" }}
                             color={data.label == "All" ? "primary" : "secondary"}
                             icon={icon}
                             label={data.label}

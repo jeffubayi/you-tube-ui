@@ -44,7 +44,7 @@ export default function YoutubeVideoCard(props: YoutubeVideoCardProps) {
                 <Skeleton variant="rectangular" width={open ? 383 : 318} height={open ? 220 : 180} sx={{ borderRadius: "10px" }} />
               ) : (
                 <img
-                  style={{ width: open || !isMobile ? 383 : "auto", height: open || !isMobile ? 220 : 180, borderRadius: "10px" }}
+                  style={{ width: open ? 383 : "auto", height: open ? 220 : 180, borderRadius: "10px" }}
                   alt={item?.title}
                   src={item?.src}
                 />
