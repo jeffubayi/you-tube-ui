@@ -9,10 +9,12 @@ This was my attempt at recreating YouTube's User Experience and User Interface w
 - [YouTube UI]() - it has a similar UI layout of components,pages,icons etc.
 - [YouTube Videos]() - an interactive video player component to watch videos.
 - [Search]() - a search component to select and preview a video.
-- [Responsive Design]() 
+- [Responsive Design]() - a desktop and mobile responsive layout
 
 ![Desktop](https://i.imgur.com/ZyTTNJs.png)
-![Mobile](https://i.imgur.com/hiDgjk2.png)
+<!-- ![Mobile](https://i.imgur.com/hiDgjk2.png) -->
+
+
 You can check out [you-tube-ui](https://you-tube-ui.vercel.app/) - your feedback and contributions are welcome!
 
 ## Getting Started
