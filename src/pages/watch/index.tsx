@@ -53,12 +53,19 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 
-export default function FullScreenDialog() {
+export default function YouTubeWatch() {
     const [openDialog, setOpenDialog] = React.useState(true);
     const [open, setOpen] = React.useState(false);
     const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
     const [showSearch, setShowSearch] = React.useState(false);
+    const router = useRouter();
+    console.log(`Router`,router?.query)
+    const {
+        title,
+        list
+    } = router?.query;
 
+    React.useEffect(() => playSearchedVideo(list), [router.query]);
 
     const playNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -66,9 +73,9 @@ export default function FullScreenDialog() {
         }
     };
 
-    const playSearchedVideo = (list: number) => {
+    const playSearchedVideo = (index: any) => {
         if (currentVideoIndex < data.length - 1) {
-            setCurrentVideoIndex(list);
+            setCurrentVideoIndex(index);
         }
     };
 
@@ -83,7 +90,6 @@ export default function FullScreenDialog() {
     };
     const theme = useTheme();
     const menuId = 'primary-search-account-menu';
-    const router = useRouter();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -96,9 +102,6 @@ export default function FullScreenDialog() {
     const openNotification = Boolean(anchorNotificationEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setNotificationAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setNotificationAnchorEl(null);
     };
 
     React.useEffect(() => {
@@ -117,9 +120,7 @@ export default function FullScreenDialog() {
         setAnchorEl(null);
         handleMobileMenuClose();
     };
-    const {
-        title,
-    } = router.query;
+   
     const handleClickOpen = () => {
         setOpen(true);
     };
