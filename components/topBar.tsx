@@ -168,7 +168,7 @@ export default function PrimarySearchAppBar() {
         },
         `/watch?v=${value?.id}`
       );
-    }, 2300);
+    }, 2000);
   };
 
 
