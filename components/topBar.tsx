@@ -141,6 +141,7 @@ export default function PrimarySearchAppBar() {
   const router = useRouter();
   const [progress, setProgress] = React.useState(0);
   const [showProgress, setShowProgress] = React.useState(false)
+
   React.useEffect(() => {
     if (showProgress) {
       const timer = setInterval(() => {
@@ -153,26 +154,21 @@ export default function PrimarySearchAppBar() {
         });
       }, 0);
     }
-
-    // return () => {
-    //   clearInterval(timer);
-    // };
   }, [showProgress]);
 
-  const handleView = (id: string, title: string) => {
+  const handleView = (value:any) => {
     setShowProgress(true)
     setTimeout(() => {
       router.push(
         {
           pathname: "/watch",
           query: {
-            id,
-            title
+            ...value
           },
         },
-        `/watch?v=${id}`
+        `/watch?v=${value?.id}`
       );
-    }, 2700);
+    }, 2300);
   };
 
 
@@ -336,7 +332,7 @@ export default function PrimarySearchAppBar() {
               onChange={(e, value: any) => {
                 if (e.type == "click") {
                   setShowSearch(true)
-                  handleView(value?.id, value?.title)
+                  handleView(value)
                 } else {
                   setShowSearch(false)
                 }
