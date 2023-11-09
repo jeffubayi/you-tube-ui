@@ -1,14 +1,11 @@
 'use client'
 import * as React from 'react';
-import { styled, alpha, useTheme } from '@mui/material/styles';
-import { Avatar, Box, InputAdornment, TextField, useMediaQuery, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import Image from 'next/image';
+import { useRouter } from "next/router";
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { Avatar,Chip, Badge, Tooltip, LinearProgress, ListSubheader, CssBaseline, Paper, Toolbar, Divider, Box, InputAdornment, Typography, Autocomplete, IconButton, Menu, MenuItem, TextField, useMediaQuery, ListItemAvatar, Stack, List, ListItem, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+
+//icons
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
@@ -16,30 +13,20 @@ import NotificationsIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import VideoCallIcon from '@mui/icons-material/VideoCallOutlined';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import Image from 'next/image';
-import Tooltip from '@mui/material/Tooltip';
-import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
 import Settings from '@mui/icons-material/SettingsOutlined';
-import { useRouter } from "next/router";
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import SensorsOutlinedIcon from '@mui/icons-material/SensorsOutlined';
-import Chip from '@mui/material/Chip';
-import { Theme, CSSObject } from '@mui/material/styles';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MuiDrawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import HomeOutlinedIcon from '@mui/icons-material/Home';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
-import ListSubheader from '@mui/material/ListSubheader';
 import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiDrawer from '@mui/material/Drawer';
+//components
 import YoutubeVideoCard from "./card"
 import ChipData from "./filterComponent"
 import BottomBar from "./bottomBar"
 import RenderMenu from "./sideBar"
 import { data, explore, sets } from "../utility/data";
-import Autocomplete from '@mui/material/Autocomplete';
-import LinearProgress from '@mui/material/LinearProgress';
 
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -156,7 +143,7 @@ export default function PrimarySearchAppBar() {
     }
   }, [showProgress]);
 
-  const handleView = (value:any) => {
+  const handleView = (value: any) => {
     setShowProgress(true)
     setTimeout(() => {
       router.push(
