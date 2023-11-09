@@ -11,16 +11,15 @@ export default function YoutubeVideoCard(props: YoutubeVideoCardProps) {
     const { loading = false, open } = props;
     const router = useRouter();
     const isMobile = useMediaQuery("(min-width:500px)");
-    const handleView = (id: string, title: string) => {
+    const handleView = (item:any) => {
       router.push(
         {
           pathname: "/watch",
           query: {
-            id,
-            title
+            ...item
           },
         },
-        `/watch?v=${id}`
+        `/watch?v=${item?.id}`
       );
     };
   
@@ -38,7 +37,7 @@ export default function YoutubeVideoCard(props: YoutubeVideoCardProps) {
               key={index}
               mt={1}
               sx={{ cursor: "pointer" }}
-              onClick={() => handleView(item.id, item.title)}
+              onClick={() => handleView(item)}
             >
               {loading ? (
                 <Skeleton variant="rectangular" width={open ? 383 : 318} height={open ? 220 : 180} sx={{ borderRadius: "10px" }} />
