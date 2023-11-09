@@ -11,7 +11,6 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import Head from 'next/head'
 import { styled, alpha, useTheme } from '@mui/material/styles';
-import { Theme, CSSObject } from '@mui/material/styles';
 import { useRouter } from "next/router";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -21,15 +20,16 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import VideoCallIcon from '@mui/icons-material/VideoCallOutlined';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import Image from 'next/image';
-import { Box, InputAdornment, Paper, Tooltip, TextField, Skeleton, useMediaQuery, ListSubheader, Badge, Avatar, Chip, Collapse, ListItemAvatar, Stack, Typography, ListItemIcon, ListItemButton } from '@mui/material';
+import { Box, Divider,InputAdornment, Paper, Tooltip, TextField, Skeleton, useMediaQuery, ListSubheader, Badge, Avatar, Chip, Collapse, ListItemAvatar, Stack, Typography, ListItemIcon, ListItemButton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ReactPlayer from 'react-player'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import { data } from "../../../utility/data";
+import SortIcon from '@mui/icons-material/Sort';
+import { data, comments } from "../../../utility/data";
 import ChipData from "../../../components/filterComponent";
 import Autocomplete from '@mui/material/Autocomplete';
 import RenderMenu from "../../../components/sideBar"
@@ -53,13 +53,25 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 
+
+
+
 export default function YouTubeWatch() {
     const [openDialog, setOpenDialog] = React.useState(true);
     const [open, setOpen] = React.useState(false);
     const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
     const [showSearch, setShowSearch] = React.useState(false);
+    const theme = useTheme();
+    const menuId = 'primary-search-account-menu';
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const isSmallScreen = useMediaQuery("(max-width: 600px)");
+    const isMenuOpen = Boolean(anchorEl);
+    const isLoggedIn = Boolean(true);
+    const isMobile = useMediaQuery("(min-width:500px)");
+    const [anchorNotificationEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
     const router = useRouter();
-    console.log(`Router`,router?.query)
+
     const {
         title,
         list
@@ -88,25 +100,9 @@ export default function YouTubeWatch() {
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-    const theme = useTheme();
-    const menuId = 'primary-search-account-menu';
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
-    const isSmallScreen = useMediaQuery("(max-width: 600px)");
-    const isMenuOpen = Boolean(anchorEl);
-    const isLoggedIn = Boolean(true);
-    const isMobile = useMediaQuery("(min-width:500px)");
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const [anchorNotificationEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
-    const openNotification = Boolean(anchorNotificationEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setNotificationAnchorEl(event.currentTarget);
     };
-
-    React.useEffect(() => {
-
-    }, []);
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -120,7 +116,7 @@ export default function YouTubeWatch() {
         setAnchorEl(null);
         handleMobileMenuClose();
     };
-   
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -275,8 +271,8 @@ export default function YouTubeWatch() {
                     <Head>
                         <title>{title || data[currentVideoIndex].title}</title>
                     </Head>
-                    <Grid container spacing={3}>
-                        <Grid item md={8} xl={8.5} xs={12} sx={{ maxHeight: isSmallScreen ? 300 : "90vh" }} mb={3}>
+                    <Grid container spacing={2}>
+                        <Grid item md={8.4} sm={12} sx={{ maxHeight: isSmallScreen ? 300 : "90vh" }} mb={3}>
                             <div className='player-wrapper'>
                                 <ReactPlayer
                                     url={`https://www.youtube.com/watch?v=${data[currentVideoIndex].id}`}
@@ -304,18 +300,18 @@ export default function YouTubeWatch() {
                                 <ListItem
                                     sx={{ bgcolor: "background.paper", borderRadius: "0.7rem", mt: -1.7 }}
                                     secondaryAction={
-                                        <Stack direction="row" spacing={2}>
+                                        <Stack direction="row" spacing={2} sx={{ cursor: "pointer" }}>
                                             {!isSmallScreen && (
                                                 <>
-                                                <Chip icon={<NotificationsActiveOutlinedIcon />} label="Subscribe" sx={{ bgColor: "red" }} />
-                                                <Chip icon={<ThumbUpOutlinedIcon />} label="like" />
-                                                <Chip icon={<ThumbDownOffAltOutlinedIcon />} label="dislike" />
-                                                <Chip icon={<ReplyOutlinedIcon />} label="Share" />
-                                                <IconButton
-                                                    size="small"
-                                                >
-                                                    <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 30 }} />
-                                                </IconButton>
+                                                    <Chip icon={<NotificationsIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />} label="Subscribe" sx={{ bgColor: "red" }} />
+                                                    <Chip icon={<ThumbUpOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />} label="like" />
+                                                    <Chip icon={<ThumbDownOffAltOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />} label="dislike" />
+                                                    <Chip icon={<ReplyOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />} label="Share" />
+                                                    <StyledIconButton
+                                                        size="small"
+                                                    >
+                                                        <MoreHorizIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 20, fill: "#000" }} />
+                                                    </StyledIconButton>
                                                 </>
                                             )}
                                         </Stack>
@@ -348,9 +344,19 @@ export default function YouTubeWatch() {
                                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}
                                         subheader={
                                             <ListSubheader component="div" id="nested-list-subheader">
-                                                {!isSmallScreen && (<Typography color="text.primary" sx={{ fontWeight: "bold", fontSize: "1.2rem", mt: 1 }}>
-                                                    3 Comments
-                                                </Typography>)}
+                                                {!isSmallScreen && (
+                                                    <Stack direction="row" spacing={2} mt={2}>
+                                                        <Typography component="div" color="text.primary" sx={{ fontWeight: "bold", fontSize: "1.2rem", pr: 4 }}>
+                                                            3 Comments
+                                                        </Typography>
+                                                        {/* <IconButton aria-label="sort"> */}
+                                                        <SortIcon sx={{ fontSize: 20, fill: "#000" }} />
+                                                        {/* </IconButton> */}
+                                                        <Typography component="div" color="text.primary" >
+                                                            Sort by
+                                                        </Typography>
+                                                    </Stack>
+                                                )}
                                             </ListSubheader>
                                         }>
                                         <ListItem alignItems="flex-start">
@@ -362,82 +368,52 @@ export default function YouTubeWatch() {
 
                                             />
                                         </ListItem>
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar alt="Remy Sharp" sx={{ bgcolor: "#072346" }} src="/static/images/avatar/1.jpg" />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={
-                                                    <Stack direction="row" spacing={1}>
-                                                        <Typography component="div" variant="caption" color="text.primary" sx={{ fontWeight: "bold" }} >
-                                                            @remysharp
-                                                        </Typography>
-                                                        <Typography component="div" color="text.secondary" variant="caption">
-                                                            2 days ago
-                                                        </Typography>
-                                                    </Stack>
-                                                }
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography component="div" variant="body2" color="text.primary"  >
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante.🤣🤣🤣🤣
-                                                        </Typography>
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        {/* <Divider variant="inset" component="li" /> */}
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar alt="Mama mia" sx={{ bgcolor: "maroon" }} src="/static/images/avatar/2.jpg" />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={
-                                                    <Stack direction="row" spacing={1}>
-                                                        <Typography component="div" variant="caption" color="text.primary" sx={{ fontWeight: "bold" }} >
-                                                            @mamamia
-                                                        </Typography>
-                                                        <Typography component="div" color="text.secondary" variant="caption">
-                                                            3 months ago
-                                                        </Typography>
-                                                    </Stack>
-                                                }
-                                                secondary={
-                                                    <Typography component="div" variant="body2" color="text.primary"  >
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.💪🏽💪🏽💪🏽💪🏽👀 Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis.🤣🤣🤣🤣
-                                                    </Typography>
-                                                }
-                                            />
-                                        </ListItem>
+                                        {comments?.map((comment, index) => (
+                                            <div key={index}>
+                                                < ListItem alignItems="flex-start" sx={{ pb: -1 }} >
+                                                    <ListItemAvatar>
+                                                        <Avatar alt={comment.avatar} sx={{ bgcolor: `${comment.color}` }} src="/static/images/avatar/3.jpg" />
+                                                    </ListItemAvatar>
+                                                    <ListItemText
+                                                        primary={
+                                                            <Stack direction="row" spacing={1}>
+                                                                <Typography component="div" variant="caption" color="text.primary" sx={{ fontWeight: "bold" }} >
+                                                                    {comment.name}
+                                                                </Typography>
+                                                                <Typography component="div" color="text.secondary" variant="caption">
+                                                                    {comment.time}
+                                                                </Typography>
+                                                            </Stack>
+                                                        }
+                                                        secondary={
+                                                            <Typography component="div" variant="body2" color="text.primary"  >
+                                                                {comment.comment}
+                                                            </Typography>
+                                                        }
+                                                    />
+                                                </ListItem>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', pl: 8, pt: -1 }}>
+                                                    <IconButton aria-label="dislike">
+                                                        <ThumbUpOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />
+                                                    </IconButton>
 
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar alt="Tom bond" sx={{ bgcolor: "#ff6150" }} src="/static/images/avatar/3.jpg" />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={
-                                                    <Stack direction="row" spacing={1}>
-                                                        <Typography component="div" variant="caption" color="text.primary" sx={{ fontWeight: "bold" }} >
-                                                            @tomcruise
-                                                        </Typography>
-                                                        <Typography component="div" color="text.secondary" variant="caption">
-                                                            1 year ago
-                                                        </Typography>
-                                                    </Stack>
-                                                }
-                                                secondary={
-                                                    <Typography component="div" variant="body2" color="text.primary"  >
-                                                        ❤️🧡💛💚🩵💙💜🖤🩶🤍Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam....
+                                                    <Typography component="div" variant="caption" color="text.primary" sx={{ pr: 1 }}  >
+                                                        {comment.likes}
                                                     </Typography>
-                                                }
-                                            />
-                                        </ListItem>
-
+                                                    <IconButton aria-label="like">
+                                                        <ThumbDownOffAltOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 20, fill: "#000" }} />
+                                                    </IconButton>
+                                                    <Typography component="div" variant="caption" color="text.primary" sx={{ pl: 2 }}  >
+                                                        Reply
+                                                    </Typography>
+                                                </Box>
+                                            </div>
+                                        ))}
                                     </List>
                                 </>
                             )}
                         </Grid>
-                        <Grid item md={4} xl={3.5} xs={12} mb={7}>
+                        <Grid item md={3.6} sm={12} mb={7}>
                             {!isSmallScreen && (<ChipData limit={4} />)}
                             <div>
                                 <List sx={{ p: 1, borderRadius: "0.7rem", bgcolor: "background.paper" }}>
@@ -449,14 +425,14 @@ export default function YouTubeWatch() {
                                                     sx={{ cursor: "pointer", mt: -0.5 }}
                                                     onClick={() => setCurrentVideoIndex(index)}
                                                     secondaryAction={
-                                                        <MoreVertIcon sx={{ color: "grey" }} />
+                                                        <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 20, fill: "grey" }} />
                                                     }
                                                 >
                                                     <ListItemAvatar >
-                                                        <Avatar variant="square" sx={{ height: "5rem", width: "9rem", borderRadius: "0.5rem" }} src={video.src} />
+                                                        <Avatar variant="square" sx={{ height: "5.5rem", width: "9.5rem", borderRadius: "0.5rem" }} src={video.src} />
                                                     </ListItemAvatar>
                                                     <ListItemText sx={{ ml: 1 }} primary={
-                                                        <Typography variant="subtitle2">{video.title}</Typography>
+                                                        <Typography variant="subtitle2" noWrap>{video.title}</Typography>
                                                     } secondary={
                                                         <div>
                                                             <Typography display="block" variant="caption" color="text.secondary">
@@ -476,7 +452,7 @@ export default function YouTubeWatch() {
                                                     key={index}
                                                     sx={{ cursor: "pointer", mt: -0.5 }}
                                                     secondaryAction={
-                                                        <MoreVertIcon sx={{ color: "grey" }} />
+                                                        <MoreVertIcon sx={{ stroke: "#ffffff", strokeWidth: 1.2, fontSize: 20, fill: "grey" }} />
                                                     }
                                                 >
                                                     <ListItemAvatar >
@@ -502,9 +478,9 @@ export default function YouTubeWatch() {
                                 </List>
                             </div>
                         </Grid>
-                    </Grid>
-                </Box>
-            </Dialog>
+                    </Grid >
+                </Box >
+            </Dialog >
         </div >
     );
 }
