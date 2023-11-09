@@ -132,3 +132,31 @@ export const explore = [
   
   
   ];
+
+  export const comments = [
+    {
+        name: "@tomcruise",
+        avatar: "Tom",
+        comment: " ❤️🧡💛💚🩵💙💜🖤🩶🤍Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam....",
+        time: "1 year ago",
+        likes: 24,
+        color: "#ff6150"
+    },
+    {
+        name: "@mamamia",
+        avatar: "Mama",
+        comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.💪🏽💪🏽💪🏽💪🏽👀 Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet.🤣🤣🤣🤣Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam....",
+        time: "4 months ago",
+        likes: 8,
+        color: "maroon"
+    },
+    {
+        name: "@remysharp",
+        avatar: "Remy",
+        comment: "🙌🙌🙌🙌Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales justo ut felis tincidunt gravida. Vestibulum maximus ac sapien a aliquet. Morbi bibendum, magna quis consequat sollicitudin, dolor diam lobortis mi, ut mollis est turpis sed ante.🤣🤣🤣🤣",
+        time: "2 days ago",
+        likes: 1,
+        color: "#072346"
+    },
+
+]
